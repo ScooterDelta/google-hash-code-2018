@@ -1,5 +1,3 @@
-from copy import copy
-
 from pos import Pos
 
 
@@ -14,26 +12,28 @@ class Car:
             self.trips = [trip]
             return True
         else:
-            for i in range(len(self.trips) + 1):
-                trips = copy(self.trips)
-                trips.insert(i, trip)
-                if self.valid_trip_list(trips):
-                    self.trips = trips
-                    return True
-            return False
+            number_trips = len(self.trips)
+            for i in range(0, number_trips):
+                prev_trip = self.trips[i]
 
-    def valid_trip_list(self, trips):
-        total_steps = 0
-        current_pos = self.start_pos
-        for scheduled_trip in trips:
-            total_steps += current_pos.distance_to(scheduled_trip.start_pos)
-            if total_steps > scheduled_trip.latest_start:
-                return False
-            total_steps += scheduled_trip.start_pos.distance_to(scheduled_trip.end_pos)
-            if total_steps > self.map.total_time:
-                return False
-            current_pos = scheduled_trip.end_pos
-        return True
+                prev_trip_end = self.find_pref_trip_end(self.trips[0:i])
+                if prev_trip_end + prev_trip.end_pos.distance_to(trip.start_pos) < trip.latest_start:
+                    detour_distance = prev_trip.end_pos.distance_to(trip.start_pos)
+                    detour_distance += trip.start_pos.distance_to(trip.end_pos)
+
+                    if i + 1 < number_trips:
+                        next_trip = self.trips[i + 1]
+                        detour_distance += trip.end_pos.distance_to(next_trip.start_pos)
+
+                        if prev_trip.latest_end + detour_distance <= next_trip.latest_start:
+                            self.trips.insert(i + 1, trip)
+                            return True
+
+                    elif detour_distance < self.map.total_time:
+                        self.trips.insert(i + 1, trip)
+                        return True
+
+            return False
 
     def calculate_score(self):
         total_steps = 0
@@ -54,3 +54,14 @@ class Car:
         for trip in self.trips:
             string += " " + str(trip.index)
         return string
+
+    def find_pref_trip_end(self, trips):
+        end_time = 0
+        current_pos = self.start_pos
+        for scheduled_trip in trips:
+            end_time += current_pos.distance_to(scheduled_trip.start_pos)
+
+            end_time = max(end_time, scheduled_trip.earliest_start)
+            end_time += scheduled_trip.start_pos.distance_to(scheduled_trip.end_pos)
+            current_pos = scheduled_trip.end_pos
+        return end_time
