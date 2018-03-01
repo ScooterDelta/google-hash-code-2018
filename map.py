@@ -25,11 +25,11 @@ class Map:
         # Progress
         total = len(prioritised_trips)
         current = 0
-        modval = int(total / 200)
+        mod_val = int(total / 200)
 
         for trip in prioritised_trips:
             current += 1
-            if current % modval == 0:
+            if current % mod_val == 0:
                 print('Progress: ' + str(current / total * 100) + '%')
             for car in self.cars:
                 is_allocated = car.add_trip(trip)
