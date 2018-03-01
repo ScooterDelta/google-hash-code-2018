@@ -5,6 +5,6 @@ class Trip:
         self.earliest_start = earliest_start
 
         self.latest_end = latest_end
-        self.latest_start = latest_end - self.distance
+        # self.latest_start = latest_end - self.distance
 
-    def distance(self):
+    # def distance(self):
