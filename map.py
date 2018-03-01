@@ -5,7 +5,7 @@ class Map:
     def __init__(self, rows, columns, cars, total_rides, bonus, total_time):
         self.rows = rows
         self.columns = columns
-        self.cars = [Car() for _ in range(cars)]
+        self.cars = [Car(self) for _ in range(cars)]
         self.total_rides = total_rides
         self.bonus = bonus
         self.total_time = total_time
