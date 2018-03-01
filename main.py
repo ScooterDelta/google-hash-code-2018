@@ -1,6 +1,9 @@
+from reader import read_file
+
+
 def main():
-    # my code here
-    print('Hello')
+    map = read_file('resources/a_example.in')["map"]
+    print(str(map))
 
 
 if __name__ == "__main__":
