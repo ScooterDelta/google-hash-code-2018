@@ -21,3 +21,9 @@ class Map:
 
     def distribute_trips(self):
         self.prioritised_trips = sorted(self.trips, key=lambda x: x.earliest_start)
+
+    def calculate_total_score(self):
+        total_score = 0
+        for car in self.cars:
+            total_score += car.calculate_score()
+        return total_score
