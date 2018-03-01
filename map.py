@@ -21,7 +21,16 @@ class Map:
 
     def distribute_trips(self):
         prioritised_trips = sorted(self.trips, key=lambda x: x.earliest_start)
+
+        # Progress
+        total = len(prioritised_trips)
+        current = 0
+        modval = int(total / 200)
+
         for trip in prioritised_trips:
+            current += 1
+            if current % modval == 0:
+                print('Progress: ' + str(current / total * 100) + '%')
             for car in self.cars:
                 is_allocated = car.add_trip(trip)
 
