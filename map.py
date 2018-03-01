@@ -20,7 +20,13 @@ class Map:
         return "rows:" + str(self.rows) + " columns: " + str(self.columns) + " trips length: " + str(len(self.trips))
 
     def distribute_trips(self):
-        self.prioritised_trips = sorted(self.trips, key=lambda x: x.earliest_start)
+        prioritised_trips = sorted(self.trips, key=lambda x: x.earliest_start)
+        for trip in prioritised_trips:
+            for car in self.cars:
+                is_allocated = car.add_trip(trip)
+
+                if is_allocated:
+                    break
 
     def calculate_total_score(self):
         total_score = 0

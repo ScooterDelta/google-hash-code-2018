@@ -4,4 +4,4 @@ class Pos:
         self.column = column
 
     def distance_to(self, pos):
-        abs(self.row - pos.row) + abs(self.column - pos.column)
+        return abs(self.row - pos.row) + abs(self.column - pos.column)

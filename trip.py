@@ -6,10 +6,4 @@ class Trip:
         self.earliest_start = earliest_start
 
         self.latest_end = latest_end
-        self.latest_start = latest_end - self.distance
-
-    def distance(self):
-        NotImplemented
-
-    def duration(self):
-        return self.distance()
+        self.latest_start = latest_end - start_pos.distance_to(end_pos)
