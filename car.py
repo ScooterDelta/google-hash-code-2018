@@ -4,9 +4,10 @@ from pos import Pos
 
 
 class Car:
-    def __init__(self):
+    def __init__(self, map):
         self.trips = []
         self.start_pos = Pos(0, 0)
+        self.map = map
 
     def add_trip(self, trip):
         if len(self.trips) == 0:
