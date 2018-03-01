@@ -48,3 +48,9 @@ class Car:
             total_score += trip_distance
             current_pos = scheduled_trip.end_pos
         return total_score
+
+    def get_trip_string(self):
+        string = str(len(self.trips))
+        for trip in self.trips:
+            string += " " + str(trip.index)
+        return string
