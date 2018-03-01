@@ -11,8 +11,13 @@ class Map:
         self.total_time = total_time
         self.trips = []
 
+        self.prioritised_trips = []
+
     def add_trip(self, trip):
         self.trips += [trip]
 
     def __str__(self):
         return "rows:" + str(self.rows) + " columns: " + str(self.columns) + " trips length: " + str(len(self.trips))
+
+    def distribute_trips(self):
+        self.prioritised_trips = sorted(self.trips, key=lambda x: x.earliest_start)
