@@ -16,6 +16,13 @@ class Car:
             for i in range(0, number_trips):
                 prev_trip = self.trips[i]
 
+                if i == 0:
+                    time = self.start_pos.distance_to(trip.start_pos) + trip.start_pos.distance_to(trip.end_pos)
+                    time += trip.end_pos.distance_to(prev_trip.start_pos)
+                    if time < prev_trip.latest_start:
+                        self.trips.insert(i, trip)
+                        return True
+
                 prev_trip_end = self.find_pref_trip_end(self.trips[0:i])
                 if prev_trip_end + prev_trip.end_pos.distance_to(trip.start_pos) < trip.latest_start:
                     detour_distance = prev_trip.end_pos.distance_to(trip.start_pos)
