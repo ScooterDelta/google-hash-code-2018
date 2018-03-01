@@ -34,3 +34,17 @@ class Car:
                 return False
             current_pos = scheduled_trip.end_pos
         return True
+
+    def calculate_score(self):
+        total_steps = 0
+        total_score = 0
+        current_pos = self.start_pos
+        for scheduled_trip in self.trips:
+            total_steps += current_pos.distance_to(scheduled_trip.start_pos)
+            if total_steps == scheduled_trip.earliest_start:
+                total_score += self.map.bonus
+            trip_distance = scheduled_trip.start_pos.distance_to(scheduled_trip.end_pos)
+            total_steps += trip_distance
+            total_score += trip_distance
+            current_pos = scheduled_trip.end_pos
+        return total_score
