@@ -21,23 +21,26 @@ class Map:
 
     def distribute_trips(self):
         prioritised_trips = sorted(self.trips, key=lambda x: x.earliest_start)
+        total_trips = len(self.trips)
 
-        # Progress
-        total = len(prioritised_trips)
-        current = 0
-        mod_val = int(total / 200)
-        if mod_val == 0:
-            mod_val = 1
-
-        for trip in prioritised_trips:
-            current += 1
-            if current % mod_val == 0:
-                print('Progress: ' + str(current / total * 100) + '%')
+        has_run = False
+        trip = prioritised_trips.pop()
+        while len(prioritised_trips) > 0:
+            print((total_trips - len(prioritised_trips)) / total_trips)
             for car in self.cars:
-                is_allocated = car.add_trip(trip)
+                if car.add_trip(trip):
+                    if len(prioritised_trips) <= 0:
+                        return
+                    trip = prioritised_trips.pop()
 
-                if is_allocated:
-                    break
+            if len(prioritised_trips) <= 0:
+                return
+
+            if has_run:
+                trip = prioritised_trips.pop()
+                has_run = False
+            else:
+                has_run = True
 
     def calculate_total_score(self):
         total_score = 0
