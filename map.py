@@ -26,6 +26,8 @@ class Map:
         total = len(prioritised_trips)
         current = 0
         mod_val = int(total / 200)
+        if mod_val == 0:
+            mod_val = 1
 
         for trip in prioritised_trips:
             current += 1

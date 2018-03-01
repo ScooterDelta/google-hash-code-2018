@@ -1,4 +1,4 @@
-from copy import deepcopy
+from copy import copy
 
 from pos import Pos
 
@@ -15,7 +15,7 @@ class Car:
             return True
         else:
             for i in range(len(self.trips) + 1):
-                trips = deepcopy(self.trips)
+                trips = copy(self.trips)
                 trips.insert(i, trip)
                 if self.valid_trip_list(trips):
                     self.trips = trips
